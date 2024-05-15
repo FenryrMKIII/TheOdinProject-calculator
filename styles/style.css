@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    padding: 0;
+    height : 100vh;
+    width : 100vw;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgreen;
+}
+
+.calculator {
+    width: 40vw;
+    height: 60vh;
+    background-color: red;
+    display:grid;
+    grid-template-areas: "display display display display"
+                            "commands commands commands operators"
+                            "numbers numbers numbers operators"
+                            "numbers numbers numbers operators"
+                            "numbers numbers numbers operators"
+                            "commands_bis commands_bis zero operators";
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    }
+
+.display {
+    background-color: pink;
+    grid-area: display;
+    display:flex;
+    flex:1;
+}
+
+.display > input {
+    display:flex;
+    flex:1;
+}
+
+
+.commands{
+    display: flex;
+    flex:1;
+    grid-area: commands;
+}
+
+.operators {
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    grid-area: operators;
+}
+
+.numbers {
+    grid-area: numbers;
+    display: flex;
+    flex:1;
+    flex-wrap: wrap;
+}
+
+button.numbers{
+    background-color: orange;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 33.33%;
+}
+
+.zero {
+    grid-area: zero;
+    display: flex;
+    flex:1;
+}
+

@@ -10,11 +10,15 @@ body {
 .container {
     width: 80vw;
     height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
     background-color: lightgreen;
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 .calculator {
     width: 40vw;

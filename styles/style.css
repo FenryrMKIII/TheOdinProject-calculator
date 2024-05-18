@@ -19,6 +19,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
 
 .calculator {
     width: 40vw;
@@ -53,6 +54,17 @@ body {
     display: flex;
     flex:1;
     grid-area: commands;
+}
+
+.commands_bis{
+    display: flex;
+    flex:1;
+    grid-area: commands_bis;
+}
+
+.power_on{
+    display: flex;
+    flex:1;
 }
 
 .operators {

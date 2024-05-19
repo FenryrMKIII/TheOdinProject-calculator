@@ -74,14 +74,14 @@ body {
     grid-area: operators;
 }
 
-.numbers {
+.numbers_div {
     grid-area: numbers;
     display: flex;
     flex:1;
     flex-wrap: wrap;
 }
 
-button.numbers{
+.numbers_button{
     background-color: orange;
     flex-grow: 0;
     flex-shrink: 0;

@@ -30,7 +30,7 @@ function assignFunctionToButton(classOrId, label, func) {
     }
     }}
 
-// assign math operators function
+/*// assign math operators function
 let operators_dict = {
   'add': add,
   'subtract': substract,
@@ -43,7 +43,7 @@ for (let key in operators_dict) {
   button.onclick = function() {
     operator = operators_dict[key]()
   }
-}
+}*/
 
 // assign operate function
 let button = document.getElementById('equals');
@@ -56,13 +56,20 @@ function get_display() {
 }
 
 function update_display(value, caller) {
+  console.log(first_value);
+  console.log(second_value);
+  console.log(operator);
+
   let display = get_display();
 
   if (caller === 'numbers_button') {
     if (display.value === '0') {
       display.value = value;
-    } else {
+    } else if (operator === undefined) {
       display.value = display.value + value;
+    }
+    else {
+      display.value = value;
     }
   }
 
@@ -108,8 +115,13 @@ function update_state(a) {
 }
 
 function add_display() {
+  if (operator === undefined) {
   operator = 'add'
-  update_display('0')
+  update_display('0') }
+  else {
+    operate()
+    operator = 'add'
+  }
 }
 
 function add(a,b) {
@@ -147,6 +159,4 @@ assignFunctionToButton('id', 'add', add_display);
 assignFunctionToButton('id', 'clear', clear);
 
 
-console.log(first_value)
-console.log(second_value)
-console.log(operator)
+// module.exports = {add, multiply, substract, divide};

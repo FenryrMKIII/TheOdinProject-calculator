@@ -14,4 +14,6 @@ let button = document.getElementById('add');
 
 - Is it possible to directly consider float / integer from the calculator instead of strings ? 
 - How to perform input validation ? 
+- How to efficiently implement DOM when testing with Jest ?
+- module export is not supported by the Browser. This results in an error. How to fix this neatly?
 

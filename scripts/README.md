@@ -12,3 +12,6 @@ let button = document.getElementById('add');
 ...
 };
 
+- Is it possible to directly consider float / integer from the calculator instead of strings ? 
+- How to perform input validation ? 
+

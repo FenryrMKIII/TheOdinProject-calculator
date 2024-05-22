@@ -10,7 +10,7 @@ for (let i = 0; i < buttons.length; i++) {
     let number_entered = this.textContent;
     if (power_state) {
     update_state(number_entered);
-    refresh_display(this.textContent);
+      update_display(number_entered, this.className);
   } else {
      }
   }
@@ -55,45 +55,44 @@ function get_display() {
   return document.getElementById('display');
 }
 
-function refresh_display() {
+function update_display(value, caller) {
   let display = get_display();
-  if (!power_state) {
-    return
-  }
-    if (operator === undefined) {
-      if (first_value === undefined) {
-        display.value = '0';
-      } else {
-        display.value = first_value;
-      }
-    }
 
-    else {
-      if (second_value === undefined) {
-        display.value = '0';
-      } else {
-        display.value = second_value;
-      }
+  if (caller === 'numbers_button') {
+    if (display.value === '0') {
+      display.value = number;
+    } else {
+      display.value = display.value + number;
     }
   }
+
+  else {
+    display.value = value;
+  }
+}
+
 
 function power_on(){
   power_state = !power_state;
 
   if (power_state) {
     console.log('Calculator is on');
-    refresh_display();
+    update_display('0', 'power_on');
   }
   else {
     console.log('Calculator is off');
-    first_value = undefined;
-    second_value = undefined;
-    operator = undefined;
-    get_display().value = ''
+    update_state()
+    update_display('', 'power_on')()
   }}
 
 function update_state(a) {
-  if (operator === undefined) {
+  if (a===undefined) {
+    first_value = undefined;
+    second_value = undefined;
+    operator = undefined;
+  }
+
+  else if (operator === undefined) {
     if (first_value === undefined) {
       first_value = a;
     } else {
@@ -126,12 +125,21 @@ function divide() {
 
 function operate() {
   let operations_dict = {'add': add(), 'multiply': multiply(), 'substract': substract(), 'divide': divide()}
-  operations_dict[operator](first_value, second_value)
+  let result = operations_dict[operator](first_value, second_value)
+
+
+}
+
+function clear() {
+  update_state()
+  update_display('0', 'clear');
 }
 
 assignFunctionToButton('id', 'power_on', power_on);
 assignFunctionToButton('id', 'equals', operate);
 assignFunctionToButton('id', 'equals', add);
+assignFunctionToButton('id', 'clear', clear);
+
 
 console.log(first_value)
 console.log(second_value)

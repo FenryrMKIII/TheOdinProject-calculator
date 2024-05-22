@@ -60,9 +60,9 @@ function update_display(value, caller) {
 
   if (caller === 'numbers_button') {
     if (display.value === '0') {
-      display.value = number;
+      display.value = value;
     } else {
-      display.value = display.value + number;
+      display.value = display.value + value;
     }
   }
 
@@ -82,7 +82,7 @@ function power_on(){
   else {
     console.log('Calculator is off');
     update_state()
-    update_display('', 'power_on')()
+    update_display('', 'power_on')
   }}
 
 function update_state(a) {
@@ -107,8 +107,13 @@ function update_state(a) {
   }
 }
 
-function add() {
-  return first_value + second_value;
+function add_display() {
+  operator = 'add'
+  update_display('0')
+}
+
+function add(a,b) {
+  return parseInt(a) + parseInt(b);
 }
 
 function multiply() {
@@ -124,8 +129,9 @@ function divide() {
 }
 
 function operate() {
-  let operations_dict = {'add': add(), 'multiply': multiply(), 'substract': substract(), 'divide': divide()}
+  let operations_dict = {'add': add, 'multiply': multiply, 'substract': substract, 'divide': divide}
   let result = operations_dict[operator](first_value, second_value)
+  update_display(result, 'operate')
 
 
 }
@@ -137,7 +143,7 @@ function clear() {
 
 assignFunctionToButton('id', 'power_on', power_on);
 assignFunctionToButton('id', 'equals', operate);
-assignFunctionToButton('id', 'equals', add);
+assignFunctionToButton('id', 'add', add_display);
 assignFunctionToButton('id', 'clear', clear);
 
 

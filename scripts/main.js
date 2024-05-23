@@ -1,162 +1,116 @@
-let first_value=undefined;
-let second_value=undefined
+let displayed_value=undefined;
+let memorized_value=undefined
 let operator = undefined
+let last_keystroke = undefined
 let power_state = false
 
-// Select all buttons with the 'numbers' class
-let buttons = document.getElementsByClassName('numbers_button');
-for (let i = 0; i < buttons.length; i++) {
-  buttons[i].onclick = function() {
-    let number_entered = this.textContent;
-    if (power_state) {
-    update_state(number_entered);
-      update_display(number_entered, this.className);
-  } else {
-     }
-  }
+
+
+function log_everyting() {
+  console.log(`displayed value = ${displayed_value}`)
+  console.log(`memorized value = ${memorized_value}`)
+  console.log(`operator = ${operator}`)
+    console.log(`last keystroke = ${last_keystroke}`)
 }
-
-function assignFunctionToButton(classOrId, label, func) {
-  if (classOrId === 'class') {
-    let button = document.getElementsByClassName(label);
-    button.onclick = function () {
-      func();
-    }
-  }
-  else {
-    let button = document.getElementById(label);
-    button.onclick = function() {
-      func();
-    }
-    }}
-
-/*// assign math operators function
-let operators_dict = {
-  'add': add,
-  'subtract': substract,
-  'multiply': multiply,
-  'divide': divide
-};
-
-for (let key in operators_dict) {
-  let button = document.getElementById(key);
-  button.onclick = function() {
-    operator = operators_dict[key]()
-  }
-}*/
-
-// assign operate function
-let button = document.getElementById('equals');
-button.onclick = function() {
-  operate();
-};
 
 function get_display() {
   return document.getElementById('display');
 }
 
-function update_display(value, caller) {
-  console.log(first_value);
-  console.log(second_value);
-  console.log(operator);
+function button_pressed(button) {
+  log_everyting()
 
   let display = get_display();
+  let operators = ['add', 'subtract', 'multiply', 'divide']
 
-  if (caller === 'numbers_button') {
-    if (display.value === '0') {
-      display.value = value;
-    } else if (operator === undefined) {
-      display.value = display.value + value;
-    }
-    else {
-      display.value = value;
-    }
-  }
+  if (button.className === 'numbers_button') {
 
-  else {
-    display.value = value;
-  }
-}
-
-
-function power_on(){
-  power_state = !power_state;
-
-  if (power_state) {
-    console.log('Calculator is on');
-    update_display('0', 'power_on');
-  }
-  else {
-    console.log('Calculator is off');
-    update_state()
-    update_display('', 'power_on')
-  }}
-
-function update_state(a) {
-  if (a===undefined) {
-    first_value = undefined;
-    second_value = undefined;
-    operator = undefined;
-  }
-
-  else if (operator === undefined) {
-    if (first_value === undefined) {
-      first_value = a;
+    if (last_keystroke !== 'numbers_button') {
+      memorized_value = displayed_value;
+      displayed_value = parseInt(button.textContent);
     } else {
-      first_value = first_value + a;
+      displayed_value = parseInt(display.value + button.textContent);
+
+    }
+  } else if (button.id === 'power_on') {
+    if (!power_state) {
+      power_state = !power_state;
+      console.log('Calculator is on');
+      displayed_value = 0;
+
+    } else {
+      power_state = !power_state;
+      console.log('Calculator is off');
+      displayed_value = undefined;
     }
   }
-  else if (second_value === undefined) {
-    second_value = a;
+
+    else if (button.id === 'equals') {
+        displayed_value = operate(memorized_value, displayed_value, operator);
+      operator = undefined;
+        memorized_value = undefined;
+    }
+   else if (operators.includes(button.id)) {
+    if (memorized_value !== undefined) {
+      operator = button.id;
+      displayed_value = operate(memorized_value, displayed_value, operator);
+      memorized_value = undefined;
+    } else {
+      operator = button.id;
+    }
   }
-  else {
-    second_value = second_value + a;
-  }
+
+  last_keystroke = button.className;
+  display.value = displayed_value
+  log_everyting()
+
 }
 
-function add_display() {
-  if (operator === undefined) {
-  operator = 'add'
-  update_display('0') }
-  else {
-    operate()
-    operator = 'add'
-  }
-}
 
 function add(a,b) {
-  return parseInt(a) + parseInt(b);
+  return a + b;
 }
 
 function multiply() {
-  return first_value + second_value;
+  return displayed_value + memorized_value;
 }
 
 function substract() {
-  return first_value + second_value;
+  return displayed_value + memorized_value;
 }
 
 function divide() {
-  return first_value + second_value;
+  return displayed_value + memorized_value;
 }
 
-function operate() {
+function operate(a,b,operator) {
   let operations_dict = {'add': add, 'multiply': multiply, 'substract': substract, 'divide': divide}
-  let result = operations_dict[operator](first_value, second_value)
-  update_display(result, 'operate')
-
-
+  return operations_dict[operator](a,b)
 }
 
-function clear() {
-  update_state()
-  update_display('0', 'clear');
-}
+Array.from(document.getElementsByClassName('numbers_button')).forEach(button => {
+  button.onclick = function() {
+    button_pressed(this);
+  }
+});
 
-assignFunctionToButton('id', 'power_on', power_on);
-assignFunctionToButton('id', 'equals', operate);
-assignFunctionToButton('id', 'add', add_display);
-assignFunctionToButton('id', 'clear', clear);
+function assignFunctionToButton(classOrId, label, func) {
+  if (classOrId === 'class') {
+    let button = document.getElementsByClassName(label);
+    button.onclick = function () {
+      func(this);
+    }
+  }
+  else {
+    let button = document.getElementById(label);
+    button.onclick = function() {
+      func(this);
+    }
+  }}
 
+assignFunctionToButton('id', 'power_on', button_pressed);
+assignFunctionToButton('id', 'equals', button_pressed);
+assignFunctionToButton('id', 'add', button_pressed);
+assignFunctionToButton('id', 'clear', button_pressed);
 
 // module.exports = {add, multiply, substract, divide};

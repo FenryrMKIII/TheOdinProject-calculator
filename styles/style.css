@@ -4,7 +4,6 @@ body {
     height : 100vh;
     width : 100vw;
     font-family: 'Roboto', sans-serif;
-    background-color: #f0f0f0;
 }
 
 .container {
@@ -15,17 +14,19 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     margin: auto;
-    background-color: lightgreen;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .calculator {
-    width: 40vw;
+    width: 30vw;
     height: 60vh;
-    background-color: red;
     display:grid;
+    border-radius: 25px;
+    border: 2px solid black;
+    padding: 20px;
+    grid-gap: 10px;
     grid-template-areas: "display display display display"
                             "commands commands commands operators"
                             "numbers numbers numbers operators"
@@ -38,15 +39,19 @@ body {
     }
 
 .display {
-    background-color: pink;
     grid-area: display;
     display:flex;
     flex:1;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+
 }
 
 .display > input {
     display:flex;
     flex:1;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 }
 
 
@@ -79,18 +84,27 @@ body {
     display: flex;
     flex:1;
     flex-wrap: wrap;
+    gap:10px;
 }
 
 .numbers_button{
     background-color: orange;
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: 33.33%;
+    flex-basis: 30%;
 }
 
 .zero {
     grid-area: zero;
     display: flex;
-    flex:1;
+    flex:1;}
+
+    #equals {
+        border-bottom-right-radius: 25px;
+    }
+
+    #power_on {
+        border-bottom-left-radius: 25px;
+    }
 }
 
